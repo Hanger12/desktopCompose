@@ -24,6 +24,8 @@ fun App() {
     }
 }
 
+// comment
+
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         App()
