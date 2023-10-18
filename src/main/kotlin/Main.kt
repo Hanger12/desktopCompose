@@ -1,11 +1,13 @@
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -23,16 +25,34 @@ import java.util.*
 @Composable
 fun App() {
     MaterialTheme {
-        Column(
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            Box(
+        var startMenuVisible by remember { mutableStateOf(false) }
+
+        Box {
+            Column(
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.95f)
+                        .background(color = Color.Blue)
+                )
+                ToolsPanel(
+                    modifier = Modifier.fillMaxSize(),
+                    startMenuVisibleCallback = { startMenuVisible = !startMenuVisible }
+                )
+            }
+            AnimatedVisibility(
+                visible = startMenuVisible,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.95f)
-                    .background(color = Color.Blue)
-            )
-            ToolsPanel(modifier = Modifier.fillMaxSize())
+                    .align(Alignment.Center)
+            ) {
+                StartMenu(
+                    modifier = Modifier
+                        .fillMaxHeight(0.8f)
+                        .fillMaxWidth(0.5f)
+                )
+            }
         }
     }
 }
@@ -44,7 +64,10 @@ fun main() = application {
 }
 
 @Composable
-fun ToolsPanel(modifier: Modifier = Modifier) {
+fun ToolsPanel(
+    modifier: Modifier = Modifier,
+    startMenuVisibleCallback: () -> Unit
+) {
     val iconsPadding = 5.dp
 
     Row(
@@ -68,7 +91,9 @@ fun ToolsPanel(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource("icon_win11.png"),
                 contentDescription = null,
-                modifier = Modifier.fillMaxHeight(0.8f)
+                modifier = Modifier
+                    .fillMaxHeight(0.8f)
+                    .clickable { startMenuVisibleCallback.invoke() }
             )
             Image(
                 painter = painterResource("icon_search.png"),

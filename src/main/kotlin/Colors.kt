@@ -1,3 +1,3 @@
 import androidx.compose.ui.graphics.Color
 
-val ToolsMain = Color(0xE3EEF9FF)
+val ToolsMain = Color(0xFFE3EEF9)
