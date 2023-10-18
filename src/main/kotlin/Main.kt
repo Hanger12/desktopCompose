@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun App() {
+fun App(viewModel: MainViewModel) {
     MaterialTheme {
         var startMenuVisible by remember { mutableStateOf(false) }
 
@@ -38,6 +38,7 @@ fun App() {
                         .background(color = Color.Blue)
                 )
                 ToolsPanel(
+                    viewModel = viewModel,
                     modifier = Modifier.fillMaxSize(),
                     startMenuVisibleCallback = { startMenuVisible = !startMenuVisible }
                 )
@@ -58,17 +59,28 @@ fun App() {
 }
 
 fun main() = application {
+    val viewModel = MainViewModel
+    val coroutineScope = rememberCoroutineScope()
+
+    // Инициализация значков
+    coroutineScope.launch {
+        // на панели задач
+        viewModel.getIconsOnToolsPanel()
+    }
+
     Window(onCloseRequest = ::exitApplication) {
-        App()
+        App(viewModel)
     }
 }
 
 @Composable
 fun ToolsPanel(
+    viewModel: MainViewModel,
     modifier: Modifier = Modifier,
     startMenuVisibleCallback: () -> Unit
 ) {
     val iconsPadding = 5.dp
+    val icons by viewModel.iconsOnToolsPanel.collectAsState()
 
     Row(
         modifier = modifier
@@ -100,6 +112,13 @@ fun ToolsPanel(
                 contentDescription = null,
                 modifier = Modifier.fillMaxHeight(0.8f)
             )
+            icons.forEach { icon ->
+                Image(
+                    painter = painterResource("icon_up.png"),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxHeight(0.8f)
+                )
+            }
         }
         Row(
             modifier = Modifier
