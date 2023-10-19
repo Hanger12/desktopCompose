@@ -10,8 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.pointer.*
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.useResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import models.IconObjectToolsPanel
 import presenter.MainViewModel
+import java.io.File
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -70,8 +73,19 @@ fun DesktopBox(
                                     iconOffset += it
                                 }
                         ) {
+                            val iconFile = File(icon.iconPath)
+                            val imageBitmap: ImageBitmap = remember(iconFile) {
+                                try {
+                                    loadImageBitmap(iconFile.inputStream())
+                                } catch (e: Exception) {
+                                    useResource("icon_file.png") {
+                                        loadImageBitmap(it)
+                                    }
+                                }
+                            }
+
                             Image(
-                                painter = painterResource("icon_win11.png"),
+                                bitmap = imageBitmap,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(40.dp)
