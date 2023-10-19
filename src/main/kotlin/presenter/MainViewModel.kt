@@ -28,8 +28,8 @@ object MainViewModel {
                     name = "Yandex",
                     path = "/usr/bin/yandex-browser-stable",
                     iconPath = "yandex-browser",
-                    x = 0f,
-                    y = 0f
+                    x = 10f,
+                    y = 10f
                 )
             )
             add(
@@ -37,8 +37,8 @@ object MainViewModel {
                     name = "Intellij IDEA",
                     path = "/home/lord-artem/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea.sh",
                     iconPath = "intellij_idea",
-                    x = 100f,
-                    y = 100f
+                    x = 110f,
+                    y = 10f
                 )
             )
             add(
@@ -46,8 +46,17 @@ object MainViewModel {
                     name = "discord",
                     path = "/usr/share/discord/Discord",
                     iconPath = "discord",
-                    x = 100f,
-                    y = 250f
+                    x = 210f,
+                    y = 10f
+                )
+            )
+            add(
+                IconObjectDesktop(
+                    name = "File Manager",
+                    path = "dolphin",
+                    iconPath = "system-file-manager",
+                    x = 310f,
+                    y = 10f
                 )
             )
         }

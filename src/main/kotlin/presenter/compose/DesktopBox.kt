@@ -74,8 +74,16 @@ fun DesktopBox(
                                 }
                         ) {
                             val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
-
-                            try {
+                            Image(
+                                painter = loadSvgPainter(
+                                    inputStream = iconFile.inputStream(),
+                                    density = Density(1f)
+                                ),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(40.dp)
+                            )
+                            /*try {
                                 Image(
                                     painter = loadSvgPainter(
                                         inputStream = iconFile.inputStream(),
@@ -91,7 +99,7 @@ fun DesktopBox(
                                     contentDescription = null,
                                     modifier = Modifier.fillMaxHeight(0.8f)
                                 )
-                            }
+                            }*/
                             Text(
                                 text = icon.name,
                                 style = TextStyle(

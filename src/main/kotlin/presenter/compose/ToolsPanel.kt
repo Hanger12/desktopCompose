@@ -76,8 +76,15 @@ fun ToolsPanel(
                     )
                 }) {
                     val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
-
-                    try {
+                    Image(
+                        painter = loadSvgPainter(
+                            inputStream = iconFile.inputStream(),
+                            density = Density(1f)
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxHeight(0.8f)
+                    )
+                    /*try {
                         Image(
                             painter = loadSvgPainter(
                                 inputStream = iconFile.inputStream(),
@@ -92,7 +99,7 @@ fun ToolsPanel(
                             contentDescription = null,
                             modifier = Modifier.fillMaxHeight(0.8f)
                         )
-                    }
+                    }*/
                 }
             }
         }
