@@ -1,5 +1,6 @@
 package presenter.compose
 
+import ProcessBuilderCommands
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.onDrag
 import androidx.compose.foundation.layout.*
@@ -62,7 +63,7 @@ fun DesktopBox(
                                     matcher = PointerMatcher.mouse(PointerButton.Primary),
                                     onClick = {},
                                     onDoubleClick = {
-
+                                        ProcessBuilderCommands.startProcess("/home/lord-artem/1111.txt")
                                     }
                                 )
                                 .onDrag {
