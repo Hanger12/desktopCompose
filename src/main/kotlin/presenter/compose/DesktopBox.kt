@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -20,13 +19,12 @@ import kotlinx.coroutines.launch
 import models.IconObjectToolsPanel
 import presenter.MainViewModel
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DesktopBox(
-    viewModel: MainViewModel,
     modifier: Modifier = Modifier
 ) {
-    val icons by viewModel.iconsOnDesktop.collectAsState()
+    val icons by MainViewModel.iconsOnDesktop.collectAsState()
 
     Box(modifier = modifier) {
         val coroutineScope = rememberCoroutineScope()
@@ -44,7 +42,7 @@ fun DesktopBox(
                         listOf(
                             ContextMenuItem("Добавить на панель задач") {
                                 coroutineScope.launch {
-                                    viewModel.addIconOnToolsPanel(
+                                    MainViewModel.addIconOnToolsPanel(
                                         newIcon = IconObjectToolsPanel(
                                             path = icon.path,
                                             iconPath = icon.iconPath

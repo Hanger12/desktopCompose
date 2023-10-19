@@ -1,5 +1,6 @@
 package presenter
 
+import UserViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
@@ -16,7 +18,9 @@ import presenter.compose.StartMenu
 import presenter.compose.ToolsPanel
 
 @Composable
-fun App(viewModel: MainViewModel) {
+fun App(
+    exitCallback: () -> Unit,
+) {
     MaterialTheme {
         var startMenuVisible by remember { mutableStateOf(false) }
 
@@ -30,14 +34,12 @@ fun App(viewModel: MainViewModel) {
                         .fillMaxHeight(0.95f)
                 ) {
                     DesktopBox(
-                        viewModel = viewModel,
                         modifier = Modifier
                             .fillMaxSize()
                             .background(color = Color.Blue),
                     )
                 }
                 ToolsPanel(
-                    viewModel = viewModel,
                     modifier = Modifier.fillMaxSize(),
                     startMenuVisibleCallback = { startMenuVisible = !startMenuVisible }
                 )
@@ -48,9 +50,11 @@ fun App(viewModel: MainViewModel) {
                     .align(Alignment.Center)
             ) {
                 StartMenu(
+                    exitCallback = exitCallback,
                     modifier = Modifier
-                        .fillMaxHeight(0.8f)
-                        .fillMaxWidth(0.5f)
+                        .fillMaxHeight(0.7f)
+                        .fillMaxWidth(0.4f)
+                        .offset(y = 50.dp)
                 )
             }
         }
@@ -58,20 +62,25 @@ fun App(viewModel: MainViewModel) {
 }
 
 fun main() = application {
-    val viewModel = MainViewModel
     val coroutineScope = rememberCoroutineScope()
     coroutineScope.launch {
-        init(viewModel)
+        initMainViewModel()
+    }
+    coroutineScope.launch {
+        initUserViewModel()
     }
 
-
     Window(onCloseRequest = ::exitApplication) {
-        App(viewModel)
+        App(exitCallback = ::exitApplication)
     }
 }
 
-private fun init(viewModel: MainViewModel) {
-    viewModel.getIconsOnToolsPanel()
-    viewModel.getIconsOnDesktop()
+private fun initMainViewModel() {
+    MainViewModel.getIconsOnToolsPanel()
+    MainViewModel.getIconsOnDesktop()
     // viewModel.getIconsOnStartMenu()
+}
+
+private fun initUserViewModel() {
+    UserViewModel.setUser(UserViewModel.getDefaultUser())
 }

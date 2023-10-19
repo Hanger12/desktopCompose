@@ -21,12 +21,11 @@ import java.util.*
 
 @Composable
 fun ToolsPanel(
-    viewModel: MainViewModel,
     modifier: Modifier = Modifier,
     startMenuVisibleCallback: () -> Unit
 ) {
     val iconsPadding = 5.dp
-    val icons by viewModel.iconsOnToolsPanel.collectAsState()
+    val icons by MainViewModel.iconsOnToolsPanel.collectAsState()
 
     Row(
         modifier = modifier
@@ -65,7 +64,7 @@ fun ToolsPanel(
                     listOf(
                         ContextMenuItem("Удалить с панели задач") {
                             coroutineScope.launch {
-                                viewModel.deleteIconFromToolsPanel(icon)
+                                MainViewModel.deleteIconFromToolsPanel(icon)
                             }
                         },
                         ContextMenuItem("Что нибудь еще...") {
