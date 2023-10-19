@@ -1,77 +1,23 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+package presenter.compose
+
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.ui.Alignment
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import presenter.MainViewModel
+import presenter.ToolsMain
 import java.text.SimpleDateFormat
 import java.util.*
-
-@Composable
-fun App(viewModel: MainViewModel) {
-    MaterialTheme {
-        var startMenuVisible by remember { mutableStateOf(false) }
-
-        Box {
-            Column(
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.95f)
-                        .background(color = Color.Blue)
-                )
-                ToolsPanel(
-                    viewModel = viewModel,
-                    modifier = Modifier.fillMaxSize(),
-                    startMenuVisibleCallback = { startMenuVisible = !startMenuVisible }
-                )
-            }
-            AnimatedVisibility(
-                visible = startMenuVisible,
-                modifier = Modifier
-                    .align(Alignment.Center)
-            ) {
-                StartMenu(
-                    modifier = Modifier
-                        .fillMaxHeight(0.8f)
-                        .fillMaxWidth(0.5f)
-                )
-            }
-        }
-    }
-}
-
-fun main() = application {
-    val viewModel = MainViewModel
-    val coroutineScope = rememberCoroutineScope()
-
-    // Инициализация значков
-    coroutineScope.launch {
-        // на панели задач
-        viewModel.getIconsOnToolsPanel()
-    }
-
-    Window(onCloseRequest = ::exitApplication) {
-        App(viewModel)
-    }
-}
 
 @Composable
 fun ToolsPanel(
@@ -100,6 +46,8 @@ fun ToolsPanel(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            val coroutineScope = rememberCoroutineScope()
+
             Image(
                 painter = painterResource("icon_win11.png"),
                 contentDescription = null,
@@ -113,11 +61,24 @@ fun ToolsPanel(
                 modifier = Modifier.fillMaxHeight(0.8f)
             )
             icons.forEach { icon ->
-                Image(
-                    painter = painterResource("icon_up.png"),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxHeight(0.8f)
-                )
+                ContextMenuArea(items = {
+                    listOf(
+                        ContextMenuItem("Удалить с панели задач") {
+                            coroutineScope.launch {
+                                viewModel.deleteIconFromToolsPanel(icon)
+                            }
+                        },
+                        ContextMenuItem("Что нибудь еще...") {
+
+                        }
+                    )
+                }) {
+                    Image(
+                        painter = painterResource("icon_up.png"),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxHeight(0.8f)
+                    )
+                }
             }
         }
         Row(
