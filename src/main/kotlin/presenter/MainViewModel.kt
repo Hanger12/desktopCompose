@@ -27,7 +27,7 @@ object MainViewModel {
                 IconObjectDesktop(
                     name = "Yandex",
                     path = "/usr/bin/yandex-browser-stable",
-                    iconPath = "/usr/share/applications/yandex-browser",
+                    iconPath = "yandex-browser",
                     x = 0f,
                     y = 0f
                 )
@@ -36,7 +36,7 @@ object MainViewModel {
                 IconObjectDesktop(
                     name = "Intellij IDEA",
                     path = "/home/lord-artem/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea.sh",
-                    iconPath = "/usr/share/applications/kcm_clock.desktop",
+                    iconPath = "intellij_idea",
                     x = 100f,
                     y = 100f
                 )
@@ -45,7 +45,7 @@ object MainViewModel {
                 IconObjectDesktop(
                     name = "discord",
                     path = "/usr/share/discord/Discord",
-                    iconPath = "/usr/share/applications/discord",
+                    iconPath = "discord",
                     x = 100f,
                     y = 250f
                 )

@@ -13,8 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.useResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,19 +75,14 @@ fun DesktopBox(
                                     iconOffset += it
                                 }
                         ) {
-                            val iconFile = File(icon.iconPath)
-                            val imageBitmap: ImageBitmap = remember(iconFile) {
-                                try {
-                                    loadImageBitmap(iconFile.inputStream())
-                                } catch (e: Exception) {
-                                    useResource("icon_file.png") {
-                                        loadImageBitmap(it)
-                                    }
-                                }
-                            }
+                            val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
+
 
                             Image(
-                                bitmap = imageBitmap,
+                                painter = loadSvgPainter(
+                                    inputStream = iconFile.inputStream(),
+                                    density = Density(1f)
+                                ),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(40.dp)
