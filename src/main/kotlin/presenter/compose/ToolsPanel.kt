@@ -7,8 +7,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -16,6 +18,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import presenter.MainViewModel
 import presenter.ToolsMain
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -72,11 +75,24 @@ fun ToolsPanel(
                         }
                     )
                 }) {
-                    Image(
-                        painter = painterResource("icon_up.png"),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxHeight(0.8f)
-                    )
+                    val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
+
+                    try {
+                        Image(
+                            painter = loadSvgPainter(
+                                inputStream = iconFile.inputStream(),
+                                density = Density(1f)
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxHeight(0.8f)
+                        )
+                    } catch (e: Exception) {
+                        Image(
+                            painter = painterResource("icon_file.png"),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxHeight(0.8f)
+                        )
+                    }
                 }
             }
         }

@@ -61,14 +61,7 @@ object MainViewModel {
     // Получить список приложений на панели задач
     fun getIconsOnToolsPanel() {
         _iconsOnToolsPanel.value = mutableListOf<IconObjectToolsPanel>().apply {
-            for (i in 0..3) {
-                add(
-                    IconObjectToolsPanel(
-                        path = "",
-                        iconPath = "",
-                    )
-                )
-            }
+
         }
     }
 

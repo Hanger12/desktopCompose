@@ -10,11 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.pointer.*
-import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.res.loadSvgPainter
-import androidx.compose.ui.res.useResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
@@ -77,22 +75,28 @@ fun DesktopBox(
                         ) {
                             val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
 
-
-                            Image(
-                                painter = loadSvgPainter(
-                                    inputStream = iconFile.inputStream(),
-                                    density = Density(1f)
-                                ),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(40.dp)
-                            )
+                            try {
+                                Image(
+                                    painter = loadSvgPainter(
+                                        inputStream = iconFile.inputStream(),
+                                        density = Density(1f)
+                                    ),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                )
+                            } catch (e: Exception) {
+                                Image(
+                                    painter = painterResource("icon_file.png"),
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxHeight(0.8f)
+                                )
+                            }
                             Text(
                                 text = icon.name,
                                 style = TextStyle(
                                     color = Color.White,
                                     fontSize = 16.sp,
-
                                     ),
                             )
                         }
