@@ -12,7 +12,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.res.loadSvgPainter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
@@ -83,23 +82,6 @@ fun DesktopBox(
                                 modifier = Modifier
                                     .size(40.dp)
                             )
-                            /*try {
-                                Image(
-                                    painter = loadSvgPainter(
-                                        inputStream = iconFile.inputStream(),
-                                        density = Density(1f)
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                )
-                            } catch (e: Exception) {
-                                Image(
-                                    painter = painterResource("icon_file.png"),
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxHeight(0.8f)
-                                )
-                            }*/
                             Text(
                                 text = icon.name,
                                 style = TextStyle(

@@ -1,5 +1,6 @@
 package presenter
 
+import DeviceManagerViewModel
 import UserViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -14,6 +15,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
 import presenter.compose.DesktopBox
+import presenter.compose.DeviceManager
 import presenter.compose.StartMenu
 import presenter.compose.ToolsPanel
 
@@ -57,6 +59,18 @@ fun App(
                         .offset(y = 50.dp)
                 )
             }
+            AnimatedVisibility(
+                visible = true,
+                modifier = Modifier
+                    .align(Alignment.Center)
+            ) {
+                DeviceManager(
+                    modifier = Modifier
+                    .fillMaxHeight(0.7f)
+                    .fillMaxWidth(0.7f)
+                    .offset(y = 50.dp)
+                )
+            }
         }
     }
 }
@@ -68,6 +82,9 @@ fun main() = application {
     }
     coroutineScope.launch {
         initUserViewModel()
+    }
+    coroutineScope.launch {
+        initDevicesManagerViewModel()
     }
 
     Window(onCloseRequest = ::exitApplication) {
@@ -83,4 +100,8 @@ private fun initMainViewModel() {
 
 private fun initUserViewModel() {
     UserViewModel.setUser(UserViewModel.getDefaultUser())
+}
+
+private fun initDevicesManagerViewModel() {
+    DeviceManagerViewModel.setTestDevices()
 }
