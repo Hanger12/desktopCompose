@@ -3,79 +3,102 @@ package presenter
 import DeviceManagerViewModel
 import UserViewModel
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
-import presenter.compose.DesktopBox
-import presenter.compose.DeviceManager
-import presenter.compose.StartMenu
-import presenter.compose.ToolsPanel
+import presenter.compose.*
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun App(
     exitCallback: () -> Unit,
 ) {
     MaterialTheme {
         var startMenuVisible by remember { mutableStateOf(false) }
-        var deviceManagerVisible by remember { mutableStateOf(false) }
+        var login by remember { mutableStateOf(false) }
 
-        Box {
-            Column(
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.95f)
+        var deviceManagerVisible by remember { mutableStateOf(false) }
+        var deviceManagerOffset by remember { mutableStateOf(Offset(0f, 0f)) }
+
+        if (login) {
+            Box {
+                Column(
+                    verticalArrangement = Arrangement.Bottom
                 ) {
-                    DesktopBox(
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = Color.Blue),
+                            .fillMaxWidth()
+                            .fillMaxHeight(0.95f)
+                    ) {
+                        DesktopBox(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .paint(
+                                    painter = painterResource("desktop.png"),
+                                    contentScale = ContentScale.FillBounds,
+                                ),
+                        )
+                    }
+                    ToolsPanel(
+                        modifier = Modifier.fillMaxSize(),
+                        startMenuVisibleCallback = { startMenuVisible = !startMenuVisible },
+                        deviceManagerClick = { deviceManagerVisible = !deviceManagerVisible }
                     )
                 }
-                ToolsPanel(
-                    modifier = Modifier.fillMaxSize(),
-                    startMenuVisibleCallback = { startMenuVisible = !startMenuVisible },
-                    deviceManagerClick = { deviceManagerVisible = !deviceManagerVisible }
-                )
-            }
-            AnimatedVisibility(
-                visible = startMenuVisible,
-                modifier = Modifier
-                    .align(Alignment.Center)
-            ) {
-                StartMenu(
-                    exitCallback = exitCallback,
+                AnimatedVisibility(
+                    visible = startMenuVisible,
                     modifier = Modifier
-                        .fillMaxHeight(0.7f)
-                        .fillMaxWidth(0.4f)
-                        .offset(y = 50.dp)
-                )
-            }
-            AnimatedVisibility(
-                visible = deviceManagerVisible,
-                modifier = Modifier
-                    .align(Alignment.Center)
-            ) {
-                DeviceManager(
+                        .align(Alignment.Center)
+                ) {
+                    StartMenu(
+                        exitCallback = exitCallback,
+                        modifier = Modifier
+                            .fillMaxHeight(0.7f)
+                            .fillMaxWidth(0.4f)
+                            .offset(y = 50.dp)
+                    )
+                }
+                AnimatedVisibility(
+                    visible = deviceManagerVisible,
                     modifier = Modifier
-                        .fillMaxHeight(0.7f)
-                        .fillMaxWidth(0.7f)
-                        .offset(y = 50.dp),
-                    onClose = {
-                        deviceManagerVisible = !deviceManagerVisible
-                    }
-                )
+                        .align(Alignment.Center)
+                ) {
+                    DeviceManager(
+                        modifier = Modifier
+                            .fillMaxHeight(0.7f)
+                            .fillMaxWidth(0.4f)
+                            .offset {
+                                IntOffset(deviceManagerOffset.x.toInt(), deviceManagerOffset.y.toInt())
+                            },
+                        onClose = {
+                            deviceManagerVisible = !deviceManagerVisible
+                        },
+                        onDrag = { deviceManagerOffset += it }
+                    )
+                }
             }
+        } else {
+            LoginPanel(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .paint(
+                        painter = painterResource("login_page_image.png"),
+                        contentScale = ContentScale.FillBounds
+                    ),
+                loginCallback = { login = true }
+            )
         }
     }
 }
@@ -104,7 +127,8 @@ private fun initMainViewModel() {
 }
 
 private fun initUserViewModel() {
-    UserViewModel.setUser(UserViewModel.getDefaultUser())
+    UserViewModel.setUsers(UserViewModel.getDefaultsUsers())
+    UserViewModel.setUser(UserViewModel.getOneUser())
 }
 
 private fun initDevicesManagerViewModel() {

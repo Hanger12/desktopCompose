@@ -3,12 +3,14 @@ package presenter.compose
 import DeviceManagerViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.onDrag
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -20,7 +22,8 @@ import models.DeviceType
 @Composable
 fun DeviceManager(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onDrag: (Offset) -> Unit
 ) {
     Box(modifier = modifier) {
         Column(
@@ -33,7 +36,8 @@ fun DeviceManager(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.05f),
-                    onClose = onClose
+                    onClose = onClose,
+                    onDrag = onDrag
                 )
             }
             Box {
@@ -88,10 +92,13 @@ fun DeviceManagerToolsPanel(modifier: Modifier = Modifier) {
 @Composable
 fun DeviceManagerSystemPanel(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    onDrag: (Offset) -> Unit
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.onDrag {
+            onDrag.invoke(it)
+        },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -143,37 +150,37 @@ fun DeviceManagerIconsPanel(modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = Modifier.width(5.dp))
         Image(
-            painter = painterResource("icon_file.png"),
+            painter = painterResource("icon_left_dm.png"),
             contentDescription = null,
             modifier = Modifier.fillMaxHeight(0.8f)
         )
+        Spacer(Modifier.width(5.dp))
         Image(
-            painter = painterResource("icon_file.png"),
+            painter = painterResource("icon_right_dm.png"),
             contentDescription = null,
             modifier = Modifier.fillMaxHeight(0.8f)
         )
+        Spacer(Modifier.width(5.dp))
         Image(
-            painter = painterResource("icon_file.png"),
+            painter = painterResource("icon_other_dm.png"),
             contentDescription = null,
             modifier = Modifier.fillMaxHeight(0.8f)
         )
+        Spacer(Modifier.width(5.dp))
         Image(
-            painter = painterResource("icon_file.png"),
+            painter = painterResource("icon_info_dm.png"),
             contentDescription = null,
             modifier = Modifier.fillMaxHeight(0.8f)
         )
+        Spacer(Modifier.width(5.dp))
         Image(
-            painter = painterResource("icon_file.png"),
+            painter = painterResource("icon_other_dm.png"),
             contentDescription = null,
             modifier = Modifier.fillMaxHeight(0.8f)
         )
+        Spacer(Modifier.width(5.dp))
         Image(
-            painter = painterResource("icon_file.png"),
-            contentDescription = null,
-            modifier = Modifier.fillMaxHeight(0.8f)
-        )
-        Image(
-            painter = painterResource("icon_file.png"),
+            painter = painterResource("icon_display_dm.png"),
             contentDescription = null,
             modifier = Modifier.fillMaxHeight(0.8f)
         )
