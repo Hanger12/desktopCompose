@@ -72,7 +72,7 @@ fun DesktopBox(
                                     iconOffset += it
                                 }
                         ) {
-                            val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
+                            /*val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
                             Image(
                                 painter = loadSvgPainter(
                                     inputStream = iconFile.inputStream(),
@@ -88,7 +88,7 @@ fun DesktopBox(
                                     color = Color.White,
                                     fontSize = 16.sp,
                                     ),
-                            )
+                            )*/
                         }
                     }
                 }

@@ -25,6 +25,7 @@ fun App(
 ) {
     MaterialTheme {
         var startMenuVisible by remember { mutableStateOf(false) }
+        var deviceManagerVisible by remember { mutableStateOf(false) }
 
         Box {
             Column(
@@ -43,7 +44,8 @@ fun App(
                 }
                 ToolsPanel(
                     modifier = Modifier.fillMaxSize(),
-                    startMenuVisibleCallback = { startMenuVisible = !startMenuVisible }
+                    startMenuVisibleCallback = { startMenuVisible = !startMenuVisible },
+                    deviceManagerClick = { deviceManagerVisible = !deviceManagerVisible }
                 )
             }
             AnimatedVisibility(
@@ -60,15 +62,18 @@ fun App(
                 )
             }
             AnimatedVisibility(
-                visible = true,
+                visible = deviceManagerVisible,
                 modifier = Modifier
                     .align(Alignment.Center)
             ) {
                 DeviceManager(
                     modifier = Modifier
-                    .fillMaxHeight(0.7f)
-                    .fillMaxWidth(0.7f)
-                    .offset(y = 50.dp)
+                        .fillMaxHeight(0.7f)
+                        .fillMaxWidth(0.7f)
+                        .offset(y = 50.dp),
+                    onClose = {
+                        deviceManagerVisible = !deviceManagerVisible
+                    }
                 )
             }
         }

@@ -22,10 +22,12 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ToolsPanel(
     modifier: Modifier = Modifier,
-    startMenuVisibleCallback: () -> Unit
+    startMenuVisibleCallback: () -> Unit,
+    deviceManagerClick: () -> Unit
 ) {
     val iconsPadding = 5.dp
     val icons by MainViewModel.iconsOnToolsPanel.collectAsState()
@@ -62,6 +64,15 @@ fun ToolsPanel(
                 contentDescription = null,
                 modifier = Modifier.fillMaxHeight(0.8f)
             )
+            Image(
+                painter = painterResource("icon_device_manager.png"),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight(0.8f)
+                    .onClick {
+                        deviceManagerClick.invoke()
+                    }
+            )
             icons.forEach { icon ->
                 ContextMenuArea(items = {
                     listOf(
@@ -84,22 +95,6 @@ fun ToolsPanel(
                         contentDescription = null,
                         modifier = Modifier.fillMaxHeight(0.8f)
                     )
-                    /*try {
-                        Image(
-                            painter = loadSvgPainter(
-                                inputStream = iconFile.inputStream(),
-                                density = Density(1f)
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxHeight(0.8f)
-                        )
-                    } catch (e: Exception) {
-                        Image(
-                            painter = painterResource("icon_file.png"),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxHeight(0.8f)
-                        )
-                    }*/
                 }
             }
         }

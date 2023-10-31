@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -17,7 +18,10 @@ import models.DeviceGroup
 import models.DeviceType
 
 @Composable
-fun DeviceManager(modifier: Modifier = Modifier) {
+fun DeviceManager(
+    modifier: Modifier = Modifier,
+    onClose: () -> Unit
+) {
     Box(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -25,9 +29,18 @@ fun DeviceManager(modifier: Modifier = Modifier) {
                 .background(color = Color.White)
         ) {
             Box {
+                DeviceManagerSystemPanel(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.05f),
+                    onClose = onClose
+                )
+            }
+            Box {
                 DeviceManagerToolsPanel(
                     modifier = Modifier
-                    .fillMaxHeight(0.05f)
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.05f)
                 )
             }
             Box {
@@ -71,11 +84,64 @@ fun DeviceManagerToolsPanel(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun DeviceManagerSystemPanel(
+    modifier: Modifier = Modifier,
+    onClose: () -> Unit
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row {
+            Spacer(modifier = Modifier.width(5.dp))
+            Image(
+                painter = painterResource("icon_device_manager.png"),
+                contentDescription = null,
+                modifier = Modifier.fillMaxHeight(0.8f)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(
+                text = "Диспетчер устройств",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
+            )
+        }
+        Row {
+            Image(
+                painter = painterResource("icon_collapse.png"),
+                contentDescription = null,
+                modifier = Modifier.fillMaxHeight(0.6f)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Image(
+                painter = painterResource("icon_expand.png"),
+                contentDescription = null,
+                modifier = Modifier.fillMaxHeight(0.6f)
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Image(
+                painter = painterResource("icon_close.png"),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight(0.6f)
+                    .onClick { onClose.invoke() }
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+        }
+    }
+}
+
 @Composable
 fun DeviceManagerIconsPanel(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
     ) {
+        Spacer(modifier = Modifier.width(5.dp))
         Image(
             painter = painterResource("icon_file.png"),
             contentDescription = null,
@@ -121,10 +187,11 @@ fun DeviceManagerBody(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
+        Spacer(modifier = Modifier.height(5.dp))
         list.forEach { devicesGroup ->
             DevicesView(
                 devicesGroup = devicesGroup,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(start = 10.dp)
             )
         }
     }
@@ -147,7 +214,7 @@ fun DevicesView(
                 .onClick { visible = !visible }
         ) {
             Image(
-                painter = painterResource("icon_up.png"),
+                painter = if (visible) painterResource("icon_down.png") else painterResource("icon_right.png"),
                 contentDescription = null,
                 modifier = Modifier.size(10.dp)
             )
