@@ -1,3 +1,6 @@
+import models.DeviceGroup
+import models.DeviceType
+
 class ProcessBuilderCommands {
 
     companion object {
@@ -6,6 +9,15 @@ class ProcessBuilderCommands {
 
             processBuilder.command(path)
             processBuilder.start()
+        }
+
+        fun getDeviceGroup(deviceType: DeviceType) : DeviceGroup {
+
+            return DeviceGroup(
+                name = "",
+                type = deviceType,
+                devices = emptyList()
+            )
         }
     }
 }
