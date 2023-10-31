@@ -17,7 +17,7 @@ object DeviceManagerViewModel {
         val list2 = mutableListOf<DeviceGroup>().apply {
             add(DeviceGroup(
                 name = "Test1",
-                type = DeviceType.Audio,
+                type = DeviceType.Bluetooth,
                 devices = list
             ))
             add(DeviceGroup(
@@ -27,32 +27,37 @@ object DeviceManagerViewModel {
             ))
             add(DeviceGroup(
                 name = "Test3",
-                type = DeviceType.Audio,
+                type = DeviceType.VGA,
                 devices = list
             ))
             add(DeviceGroup(
                 name = "Test4",
-                type = DeviceType.Audio,
+                type = DeviceType.Disk,
                 devices = list
             ))
             add(DeviceGroup(
                 name = "Test5",
-                type = DeviceType.Audio,
+                type = DeviceType.Keyboard,
                 devices = list
             ))
             add(DeviceGroup(
                 name = "Test6",
-                type = DeviceType.Audio,
+                type = DeviceType.Mouse,
                 devices = list
             ))
             add(DeviceGroup(
                 name = "Test7",
-                type = DeviceType.Audio,
+                type = DeviceType.USB,
                 devices = list
             ))
             add(DeviceGroup(
                 name = "Test8",
-                type = DeviceType.Audio,
+                type = DeviceType.Kernel,
+                devices = list
+            ))
+            add(DeviceGroup(
+                name = "Test8",
+                type = DeviceType.Network,
                 devices = list
             ))
         }

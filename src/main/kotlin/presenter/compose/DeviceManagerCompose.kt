@@ -204,14 +204,27 @@ fun DevicesView(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         var visible by remember { mutableStateOf(false) }
+        val iconType = when(devicesGroup?.type) {
+            DeviceType.Audio -> "icon_sound_dm.png"
+            DeviceType.Bluetooth -> "icon_bluetooth_dm.png"
+            DeviceType.VGA -> "icon_gpu_dm.png"
+            DeviceType.Kernel -> "icon_cpu_dm.png"
+            DeviceType.USB -> "icon_usb_dm.png"
+            DeviceType.Keyboard -> "icon_keyboard_dm.png"
+            DeviceType.Mouse -> "icon_mouse_dm.png"
+            DeviceType.Disk -> "icon_disk_dm.png"
+            DeviceType.Network -> "icon_network_dm.png"
+            else -> "icon_usb_dm.png"
+        }
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .onClick { visible = !visible }
+                .onClick { visible = !visible },
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = if (visible) painterResource("icon_down.png") else painterResource("icon_right.png"),
@@ -219,12 +232,7 @@ fun DevicesView(
                 modifier = Modifier.size(10.dp)
             )
             Image(
-                painter = painterResource(
-                    resourcePath = when(devicesGroup?.type) {
-                        DeviceType.Audio -> "icon_file.png"
-                        else -> "icon_file.png"
-                    }
-                ),
+                painter = painterResource(resourcePath = iconType),
                 contentDescription = null,
                 modifier = Modifier.size(20.dp)
             )
@@ -239,9 +247,14 @@ fun DevicesView(
         AnimatedVisibility(visible = visible) {
             Column {
                 devicesGroup?.devices?.forEach { device ->
-                    Row(modifier = Modifier.fillMaxWidth().padding(start = 30.dp)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 30.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Image(
-                            painter = painterResource("icon_file.png"),
+                            painter = painterResource(resourcePath = iconType),
                             contentDescription = null,
                             modifier = Modifier.size(20.dp)
                         )

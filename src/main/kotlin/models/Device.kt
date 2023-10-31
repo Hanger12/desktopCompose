@@ -14,7 +14,6 @@ enum class DeviceType {
     Bluetooth,
     Audio,
     VGA,
-    RAM,
     Keyboard,
     Mouse,
     Disk,
