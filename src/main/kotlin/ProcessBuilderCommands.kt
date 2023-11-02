@@ -57,8 +57,13 @@ class ProcessBuilderCommands {
                     else -> ""
                 }
 
-            val process = ProcessBuilder("grep", type).start()
-            process.inputStream.reader(Charsets.UTF_8).use {
+            val builders = mutableListOf<ProcessBuilder>().apply {
+                add(ProcessBuilder("lspci"))
+                add(ProcessBuilder("grep", type))
+            }
+            val process = ProcessBuilder.startPipeline(builders)
+            val last = process[1]
+            last.inputStream.reader(Charsets.UTF_8).use {
                 devices.add(Device(it.readText()))
             }
 
