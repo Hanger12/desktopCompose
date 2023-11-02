@@ -25,9 +25,9 @@ object MainViewModel {
         _iconsOnDesktop.value = mutableListOf<IconObjectDesktop>().apply {
             add(
                 IconObjectDesktop(
-                    name = "Yandex",
-                    path = "/usr/bin/yandex-browser-stable",
-                    iconPath = "yandex-browser",
+                    name = "Opera",
+                    path = "opera",
+                    iconPath = "opera",
                     x = 10f,
                     y = 10f
                 )
@@ -35,7 +35,7 @@ object MainViewModel {
             add(
                 IconObjectDesktop(
                     name = "Intellij IDEA",
-                    path = "/home/lord-artem/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea.sh",
+                    path = "/usr/bin/idea",
                     iconPath = "intellij_idea",
                     x = 110f,
                     y = 10f

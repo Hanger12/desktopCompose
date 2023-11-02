@@ -1,6 +1,7 @@
 package presenter
 
 import DeviceManagerViewModel
+import ProcessBuilderCommands
 import UserViewModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
+import models.DeviceType
 import presenter.compose.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -118,6 +120,8 @@ fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         App(exitCallback = ::exitApplication)
     }
+
+    ProcessBuilderCommands.getDeviceGroup(DeviceType.Audio)
 }
 
 private fun initMainViewModel() {

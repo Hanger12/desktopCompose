@@ -12,6 +12,16 @@ class ProcessBuilderCommands {
         }
 
         fun getDeviceGroup(deviceType: DeviceType) : DeviceGroup {
+            val type = when(deviceType){
+                DeviceType.Audio -> "Audio"
+                else -> ""
+            }
+            val process = ProcessBuilder("grep", type).start()
+            process.inputStream.reader(Charsets.UTF_8).use {
+                println(it.readText())
+            }
+
+
 
             return DeviceGroup(
                 name = "",

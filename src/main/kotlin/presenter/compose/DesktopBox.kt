@@ -4,15 +4,23 @@ import ProcessBuilderCommands
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.onDrag
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.res.loadSvgPainter
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import models.IconObjectToolsPanel
 import presenter.MainViewModel
+import java.io.File
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -64,7 +72,7 @@ fun DesktopBox(
                                     iconOffset += it
                                 }
                         ) {
-                            /*val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
+                            val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
                             Image(
                                 painter = loadSvgPainter(
                                     inputStream = iconFile.inputStream(),
@@ -80,7 +88,7 @@ fun DesktopBox(
                                     color = Color.White,
                                     fontSize = 16.sp,
                                     ),
-                            )*/
+                            )
                         }
                     }
                 }
