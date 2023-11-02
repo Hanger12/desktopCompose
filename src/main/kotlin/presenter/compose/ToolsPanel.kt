@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerButton
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -90,7 +91,12 @@ fun ToolsPanel(
                             density = Density(1f)
                         ),
                         contentDescription = null,
-                        modifier = Modifier.fillMaxHeight(0.8f)
+                        modifier = Modifier
+                            .fillMaxHeight(0.8f)
+                            .onClick(
+                                matcher = PointerMatcher.mouse(PointerButton.Primary),
+                                onClick = { ProcessBuilderCommands.startProcess(icon.path) },
+                            )
                     )
                 }
             }
