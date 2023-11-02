@@ -43,6 +43,11 @@ fun DesktopBox(
                 {
                     ContextMenuArea(items = {
                         listOf(
+                            ContextMenuItem("Открыть") {
+                                coroutineScope.launch {
+                                    ProcessBuilderCommands.startProcess(icon.path)
+                                }
+                            },
                             ContextMenuItem("Добавить на панель задач") {
                                 coroutineScope.launch {
                                     MainViewModel.addIconOnToolsPanel(
@@ -53,9 +58,14 @@ fun DesktopBox(
                                     )
                                 }
                             },
-                            ContextMenuItem("Что нибудь еще...") {
-
-                            }
+                            ContextMenuItem("Вырезать") {},
+                            ContextMenuItem("Копировать") {},
+                            ContextMenuItem("Создать ярлык") {},
+                            ContextMenuItem("Удалить") {
+                                MainViewModel.deleteIconFromDesktop(icon)
+                            },
+                            ContextMenuItem("Переименовать") {},
+                            ContextMenuItem("Свойства") {}
                         )
                     }) {
                         Column(

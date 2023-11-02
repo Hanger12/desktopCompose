@@ -62,6 +62,14 @@ object MainViewModel {
         }
     }
 
+    fun deleteIconFromDesktop(icon: IconObjectDesktop) {
+        val list = mutableListOf<IconObjectDesktop>().apply {
+            addAll(_iconsOnDesktop.value)
+            remove(icon)
+        }
+        _iconsOnDesktop.value = list.toList()
+    }
+
     // Сохранить список приложений на рабочем столе
     fun saveIconsOnDesktop() {
         TODO()

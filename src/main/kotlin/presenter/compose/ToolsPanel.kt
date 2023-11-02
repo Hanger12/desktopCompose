@@ -80,9 +80,6 @@ fun ToolsPanel(
                             coroutineScope.launch {
                                 MainViewModel.deleteIconFromToolsPanel(icon)
                             }
-                        },
-                        ContextMenuItem("Что нибудь еще...") {
-
                         }
                     )
                 }) {
