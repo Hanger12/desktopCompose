@@ -136,5 +136,5 @@ private fun initUserViewModel() {
 }
 
 private fun initDevicesManagerViewModel() {
-    DeviceManagerViewModel.setTestDevices()
+    DeviceManagerViewModel.setDevices()
 }
