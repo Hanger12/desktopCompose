@@ -196,10 +196,12 @@ fun DeviceManagerBody(modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = Modifier.height(5.dp))
         list.forEach { devicesGroup ->
-            DevicesView(
-                devicesGroup = devicesGroup,
-                modifier = Modifier.fillMaxWidth().padding(start = 10.dp)
-            )
+            if (devicesGroup.devices.isNotEmpty()) {
+                DevicesView(
+                    devicesGroup = devicesGroup,
+                    modifier = Modifier.fillMaxWidth().padding(start = 10.dp)
+                )
+            }
         }
     }
 }
@@ -260,11 +262,6 @@ fun DevicesView(
                             .padding(start = 30.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(resourcePath = iconType),
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
-                        )
                         Text(
                             text = device.name,
                             style = TextStyle(

@@ -51,21 +51,32 @@ class ProcessBuilderCommands {
                     name = "Процессоры"
                 }
                 DeviceType.Network ->{
-                    type = "'Network\\|Ethernet'"
+                    type = "Network\\|Ethernet"
                     name = "Сетевые адаптеры"
                 }
                     else -> ""
                 }
 
-            val builders = mutableListOf<ProcessBuilder>().apply {
-                add(ProcessBuilder("lspci"))
-                add(ProcessBuilder("grep", type))
+            if (deviceType == DeviceType.Kernel) {
+                val process = ProcessBuilder("hwinfo --short --cpu").start()
+                process.inputStream.reader(Charsets.UTF_8).use {
+                    if (it.readText() != "cpu:") {
+                        devices.add(Device(it.readText()))
+                    }
+                }
+            } else {
+                val builders = mutableListOf<ProcessBuilder>().apply {
+                    add(ProcessBuilder("lspci"))
+                    add(ProcessBuilder("grep", type))
+                }
+                val process = ProcessBuilder.startPipeline(builders)
+                val last = process[1]
+                last.inputStream.reader(Charsets.UTF_8).use {
+                    devices.add(Device(it.readText()))
+                }
             }
-            val process = ProcessBuilder.startPipeline(builders)
-            val last = process[1]
-            last.inputStream.reader(Charsets.UTF_8).use {
-                devices.add(Device(it.readText()))
-            }
+
+
 
             return DeviceGroup(
                 name = name,

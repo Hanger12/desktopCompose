@@ -80,7 +80,7 @@ fun App(
                     DeviceManager(
                         modifier = Modifier
                             .fillMaxHeight(0.7f)
-                            .fillMaxWidth(0.4f)
+                            .fillMaxWidth(0.5f)
                             .offset {
                                 IntOffset(deviceManagerOffset.x.toInt(), deviceManagerOffset.y.toInt())
                             },
