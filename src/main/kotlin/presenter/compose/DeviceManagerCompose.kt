@@ -250,7 +250,8 @@ fun DevicesView(
                 style = TextStyle(
                     fontSize = 12.sp,
                     color = Color.Black,
-                )
+                ),
+                modifier = Modifier.padding(start = 5.dp)
             )
         }
         AnimatedVisibility(visible = visible) {
@@ -262,12 +263,18 @@ fun DevicesView(
                             .padding(start = 30.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Image(
+                            painter = painterResource(resourcePath = iconType),
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
                         Text(
                             text = device.name,
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 color = Color.Black,
-                            )
+                            ),
+                            modifier = Modifier.padding(start = 5.dp)
                         )
                     }
                 }

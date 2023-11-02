@@ -1,6 +1,7 @@
 import models.Device
 import models.DeviceGroup
 import models.DeviceType
+import kotlin.random.Random
 
 class ProcessBuilderCommands {
 
@@ -58,10 +59,13 @@ class ProcessBuilderCommands {
                 }
 
             if (deviceType == DeviceType.Kernel) {
-                val process = ProcessBuilder("hwinfo --short --cpu").start()
+                val process = ProcessBuilder("hwinfo", "--short", "--cpu").start()
                 process.inputStream.reader(Charsets.UTF_8).use {
-                    if (it.readText() != "cpu:") {
-                        devices.add(Device(it.readText()))
+                    val result = it.readText().split("\n")
+                    result.forEach { param ->
+                        if(param != "cpu:" && param.isNotEmpty()) {
+                            devices.add(Device(param.trim()))
+                        }
                     }
                 }
             } else {
@@ -72,8 +76,14 @@ class ProcessBuilderCommands {
                 val process = ProcessBuilder.startPipeline(builders)
                 val last = process[1]
                 last.inputStream.reader(Charsets.UTF_8).use {
-                    devices.add(Device(it.readText()))
+                    val result = it.readText().split("\n")
+                    result.forEach { param ->
+                        if(param.isNotEmpty()) {
+                            devices.add(Device(param.trim()))
+                        }
+                    }
                 }
+
             }
 
 
