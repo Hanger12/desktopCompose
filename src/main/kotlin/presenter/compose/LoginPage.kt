@@ -68,64 +68,67 @@ fun UserPanel(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = if (user?.imagePath == "") painterResource("image_user_default.png") else painterResource("image_user_default.png"),
-            contentDescription = "user image",
-            modifier = Modifier
-                .fillMaxHeight(0.3f)
-                .clip(CircleShape),
-        )
-        Text(
-            text = user?.name ?: "",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Center,
-            ),
-            modifier = Modifier.padding(vertical = 10.dp)
-        )
-        TextField(
-            value = password,
-            onValueChange = { newValue ->
-                password = newValue
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.White
-            ),
-            textStyle = TextStyle(
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-            ),
-            modifier = Modifier.onKeyEvent {
-                if (it.key == Key.Enter && password == user?.password) {
-                    loginCallback.invoke()
-                    true
-                } else {
-                    false
-                }
-            },
-            singleLine = true
-        )
-        Text(
-            text = "Я забыл пароль",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-            ),
-            modifier = Modifier.padding(vertical = 10.dp)
-        )
-        Text(
-            text = "Sign-in options",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-            ),
-            modifier = Modifier.padding(vertical = 10.dp)
-        )
+        if (user != null){
+            Image(
+                painter = if (user?.imagePath == "") painterResource("image_user_default.png") else painterResource(user!!.imagePath),
+                contentDescription = "user image",
+                modifier = Modifier
+                    .fillMaxHeight(0.3f)
+                    .clip(CircleShape),
+            )
+            Text(
+                text = user?.name ?: "",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Center,
+                ),
+                modifier = Modifier.padding(vertical = 10.dp)
+            )
+            TextField(
+                value = password,
+                onValueChange = { newValue ->
+                    password = newValue
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = Color.White
+                ),
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
+                modifier = Modifier.onKeyEvent {
+                    if (it.key == Key.Enter && password == user?.password) {
+                        loginCallback.invoke()
+                        true
+                    } else {
+                        false
+                    }
+                },
+                singleLine = true
+            )
+            Text(
+                text = "Я забыл пароль",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
+                modifier = Modifier.padding(vertical = 10.dp)
+            )
+            Text(
+                text = "Sign-in options",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
+                modifier = Modifier.padding(vertical = 10.dp)
+            )
+        }
+
     }
 }
 
@@ -152,7 +155,7 @@ fun UsersList(modifier: Modifier = Modifier) {
             ) {
                 Spacer(modifier = Modifier.width(10.dp))
                 Image(
-                    painter = if (user.imagePath == "") painterResource("image_user_default.png") else painterResource("image_user_default.png"),
+                    painter = if (user.imagePath == "") painterResource("image_user_default.png") else painterResource(user.imagePath),
                     contentDescription = "user image",
                     modifier = Modifier
                         .height(50.dp)

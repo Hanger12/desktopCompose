@@ -28,15 +28,15 @@ object UserViewModel {
                 id = "1",
                 name = "Юрий Витальевич",
                     password = "12345",
-                imagePath = ""
+                imagePath = "image_user_default.png"
                 )
             )
             add(
                 User(
                     id = "2",
-                    name = "Мистер Т",
-                    password = "12345",
-                    imagePath = ""
+                    name = "King_Pro100_win",
+                    password = "1212356",
+                    imagePath = "image_user2.png"
                 )
             )
         }

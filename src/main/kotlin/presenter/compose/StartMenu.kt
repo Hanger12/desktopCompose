@@ -123,7 +123,7 @@ fun UserPanel(
         ) {
             Row {
                 Image(
-                    painter = if (user?.imagePath == "") painterResource("image_user_default.png") else painterResource("image_user_default.png"),
+                    painter = if (user?.imagePath == "") painterResource("image_user_default.png") else painterResource(user!!.imagePath),
                     contentDescription = "user image",
                     modifier = Modifier
                         .fillMaxHeight(0.6f)
