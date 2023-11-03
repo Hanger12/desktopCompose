@@ -1,10 +1,8 @@
 package presenter
 
 import DeviceManagerViewModel
-import ProcessBuilderCommands
 import UserViewModel
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.material.MaterialTheme
@@ -19,10 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.launch
-import models.DeviceType
 import presenter.compose.*
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun App(
     exitCallback: () -> Unit,
@@ -120,14 +116,12 @@ fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         App(exitCallback = ::exitApplication)
     }
-
-    ProcessBuilderCommands.getDeviceGroup(DeviceType.Audio)
 }
 
 private fun initMainViewModel() {
     MainViewModel.getIconsOnToolsPanel()
     MainViewModel.getIconsOnDesktop()
-    // viewModel.getIconsOnStartMenu()
+    MainViewModel.getIconsOnStartMenu()
 }
 
 private fun initUserViewModel() {

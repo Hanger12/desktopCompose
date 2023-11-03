@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import models.IconObjectStartMenu
 import models.IconObjectToolsPanel
 import presenter.MainViewModel
 import java.io.File
@@ -52,6 +53,17 @@ fun DesktopBox(
                                 coroutineScope.launch {
                                     MainViewModel.addIconOnToolsPanel(
                                         newIcon = IconObjectToolsPanel(
+                                            path = icon.path,
+                                            iconPath = icon.iconPath
+                                        )
+                                    )
+                                }
+                            },
+                            ContextMenuItem("Закрепить на начальном экране") {
+                                coroutineScope.launch {
+                                    MainViewModel.addIconOnStartMenu(
+                                        newIcon = IconObjectStartMenu(
+                                            name = icon.name,
                                             path = icon.path,
                                             iconPath = icon.iconPath
                                         )

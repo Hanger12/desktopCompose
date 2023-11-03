@@ -107,7 +107,52 @@ object MainViewModel {
 
     // Получить список приложений в меню пуск
     fun getIconsOnStartMenu() {
-        TODO()
+        _iconsOnStartMenu.value = mutableListOf<IconObjectStartMenu>().apply {
+            add(
+                IconObjectStartMenu(
+                    name = "Opera",
+                    path = "opera",
+                    iconPath = "opera",
+                )
+            )
+            add(
+                IconObjectStartMenu(
+                    name = "Intellij IDEA",
+                    path = "/usr/bin/idea",
+                    iconPath = "intellij_idea",
+                )
+            )
+            add(
+                IconObjectStartMenu(
+                    name = "discord",
+                    path = "/usr/share/discord/Discord",
+                    iconPath = "discord",
+                )
+            )
+            add(
+                IconObjectStartMenu(
+                    name = "File Manager",
+                    path = "dolphin",
+                    iconPath = "system-file-manager",
+                )
+            )
+        }
+    }
+
+    fun addIconOnStartMenu(newIcon: IconObjectStartMenu) {
+        val newList = mutableListOf<IconObjectStartMenu>().apply {
+            addAll(_iconsOnStartMenu.value)
+            add(newIcon)
+        }
+        _iconsOnStartMenu.value = newList
+    }
+
+    fun deleteIconFromStartMenu(icon: IconObjectStartMenu) {
+        val newList = mutableListOf<IconObjectStartMenu>().apply {
+            addAll(_iconsOnStartMenu.value)
+            remove(icon)
+        }
+        _iconsOnStartMenu.value = newList
     }
 
     // Сохранить список приложений в меню пуск

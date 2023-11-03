@@ -1,10 +1,11 @@
 package presenter.compose
 
 import UserViewModel
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,13 +14,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerButton
+import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
+import presenter.MainViewModel
 import presenter.ToolsMain
 import presenter.ToolsSecondary
+import java.io.File
 
 @Composable
 fun StartMenu(
@@ -42,16 +50,71 @@ fun StartMenu(
                     .fillMaxWidth(0.8f)
                     .height(50.dp)
             )
-            Box(modifier = Modifier
+            PinedPanel(modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.9f)
-            )
+                .fillMaxHeight(0.9f))
             UserPanel(
                 exitCallback = exitCallback,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = ToolsSecondary)
             )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PinedPanel(modifier: Modifier = Modifier) {
+    val icons by MainViewModel.iconsOnStartMenu.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
+    Box(
+        modifier = modifier
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 100.dp),
+            modifier = Modifier.fillMaxSize().padding(top = 20.dp)
+        ) {
+            items(icons) { icon ->
+                ContextMenuArea(items = {
+                    listOf(
+                        ContextMenuItem("Открепить") {
+                            coroutineScope.launch {
+                                MainViewModel.deleteIconFromStartMenu(icon)
+                            }
+                        }
+                    )
+                }) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight(0.2f)
+                            .onClick(
+                                matcher = PointerMatcher.mouse(PointerButton.Primary),
+                                onClick = { ProcessBuilderCommands.startProcess(icon.path) },
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
+                        Image(
+                            painter = loadSvgPainter(
+                                inputStream = iconFile.inputStream(),
+                                density = Density(1f)
+                            ),
+                            contentDescription = null
+                        )
+                        Text(
+                            text = icon.name,
+                            style = TextStyle(
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Center
+                            ),
+                        )
+                    }
+                }
+            }
         }
     }
 }
