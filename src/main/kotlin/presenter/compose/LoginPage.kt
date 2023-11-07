@@ -47,11 +47,6 @@ fun LoginPanel(
                 loginCallback = loginCallback
             )
         }
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
-
-        }
     }
 }
 
