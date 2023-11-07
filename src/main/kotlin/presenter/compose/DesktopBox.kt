@@ -94,6 +94,7 @@ fun DesktopBox(
                                     iconOffset += it
                                 }
                         ) {
+                            // Патч к картинке
                             val iconFile = File("/usr/share/icons/BeautyLine/apps/scalable/${icon.iconPath}.svg")
                             Image(
                                 painter = loadSvgPainter(

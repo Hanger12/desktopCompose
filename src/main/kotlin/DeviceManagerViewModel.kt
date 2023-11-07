@@ -12,14 +12,11 @@ object DeviceManagerViewModel {
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Bluetooth))
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Audio))
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.VGA))
-            //add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Keyboard))
-            //add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Mouse))
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Disk))
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.USB))
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Kernel))
             add(ProcessBuilderCommands.getDeviceGroup(DeviceType.Network))
         }
-
         _devices.value = groups
     }
 }
