@@ -28,7 +28,8 @@ import java.util.*
 fun ToolsPanel(
     modifier: Modifier = Modifier,
     startMenuVisibleCallback: () -> Unit,
-    deviceManagerClick: () -> Unit
+    deviceManagerClick: () -> Unit,
+    terminalClick: () -> Unit,
 ) {
     val iconsPadding = 5.dp
     val icons by MainViewModel.iconsOnToolsPanel.collectAsState()
@@ -72,6 +73,15 @@ fun ToolsPanel(
                     .fillMaxHeight(0.8f)
                     .onClick {
                         deviceManagerClick.invoke()
+                    }
+            )
+            Image(
+                painter = painterResource("icon_device_manager.png"),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight(0.8f)
+                    .onClick {
+                        terminalClick.invoke()
                     }
             )
             icons.forEach { icon ->

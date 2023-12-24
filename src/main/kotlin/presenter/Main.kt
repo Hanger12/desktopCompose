@@ -3,6 +3,7 @@ package presenter
 import DeviceManagerViewModel
 import UserViewModel
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.material.MaterialTheme
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
@@ -29,6 +31,9 @@ fun App(
 
         var deviceManagerVisible by remember { mutableStateOf(false) }
         var deviceManagerOffset by remember { mutableStateOf(Offset(0f, 0f)) }
+
+        var terminalVisible by remember { mutableStateOf(false) }
+        var terminalOffset by remember { mutableStateOf(Offset(0f, 0f)) }
 
         if (login) {
             Box {
@@ -52,7 +57,8 @@ fun App(
                     ToolsPanel(
                         modifier = Modifier.fillMaxSize(),
                         startMenuVisibleCallback = { startMenuVisible = !startMenuVisible },
-                        deviceManagerClick = { deviceManagerVisible = !deviceManagerVisible }
+                        deviceManagerClick = { deviceManagerVisible = !deviceManagerVisible },
+                        terminalClick = { terminalVisible = !terminalVisible }
                     )
                 }
                 AnimatedVisibility(
@@ -84,6 +90,24 @@ fun App(
                             deviceManagerVisible = !deviceManagerVisible
                         },
                         onDrag = { deviceManagerOffset += it }
+                    )
+                }
+                AnimatedVisibility(
+                    visible = terminalVisible,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                ) {
+                    Terminal(
+                        modifier = Modifier
+                            .fillMaxHeight(0.6f)
+                            .fillMaxWidth(0.4f)
+                            .offset {
+                                IntOffset(terminalOffset.x.toInt(), terminalOffset.y.toInt())
+                            },
+                        onClose = {
+                            terminalVisible = !terminalVisible
+                        },
+                        onDrag = { terminalOffset += it }
                     )
                 }
             }
