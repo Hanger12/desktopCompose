@@ -108,11 +108,11 @@ class ProcessBuilderCommands {
             return when (command[0].trim().lowercase(Locale.ENGLISH)) {
                 "help" -> {
                     StringBuilder()
-                        .append("perfmon (запуск монитора производительности)\n")
+                        .append("tasklist (список активных процессов)\n")
                         .append("ipconfig (текущие значения конфигурации сети)\n")
                         .append("dir (список файлов и подкаталогов каталога)\n")
-                        .append("\n")
-                        .append("\n")
+                        .append("copy ()\n")
+                        .append("move ()\n")
                         .append("\n")
                         .append("\n")
                         .append("\n")
@@ -121,16 +121,37 @@ class ProcessBuilderCommands {
                         .toString()
                 }
 
-                "perfmon" -> {
-                    startProcess("top")
-                    ""
-                }
+                "tasklist" -> startCommand(commandList = listOf("ps"))
 
                 "ipconfig" -> startCommand(commandList = listOf("ip", "a"))
 
                 "dir" -> startCommand(commandList = listOf("ls"))
 
-                // TODO
+                "copy" -> {
+                    if (command.size == 3) {
+                        startCommand(commandList = listOf("cp", command[1], command[2]))
+                    } else {
+                        "Ошибка 0x00000057 произошла: Параметр задан неверно."
+                    }
+                }
+
+                "move" -> {
+                    if (command.size == 3) {
+                        startCommand(commandList = listOf("mv", command[1], command[2]))
+                    } else {
+                        "Ошибка 0x00000057 произошла: Параметр задан неверно."
+                    }
+                }
+
+                "" -> startCommand(commandList = listOf(""))
+
+                "" -> startCommand(commandList = listOf(""))
+
+                "" -> startCommand(commandList = listOf(""))
+
+                "" -> startCommand(commandList = listOf(""))
+
+                "" -> startCommand(commandList = listOf(""))
 
                 else -> "${command[0]} не является внутренней или внешней командой, исполняемой программой или пакетным файлом."
             }
