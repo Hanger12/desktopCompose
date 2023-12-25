@@ -115,8 +115,8 @@ class ProcessBuilderCommands {
                         .append("move [file] [path] (переместить файл)\n")
                         .append("del [file] (удаление файла)\n")
                         .append("makedir [path] (создание папки)\n")
-                        .append("ping [path] (проверка доступности целевого хоста)\n")
-                        .append("time (системное время)\n")
+                        .append("systeminfo (нформация о конфигурации компьютера)\n")
+                        .append("date (текущая дата)\n")
                         .append("hostname (имя компьютера)\n")
                         .toString()
                 }
@@ -159,15 +159,9 @@ class ProcessBuilderCommands {
                     }
                 }
 
-                "ping" -> {
-                    if (command.size == 2) {
-                        startCommand(commandList = listOf("ping", command[1]))
-                    } else {
-                        "Ошибка 0x00000057 произошла: Параметр задан неверно."
-                    }
-                }
+                "systeminfo" -> startCommand(commandList = listOf("lscpu"))
 
-                "time" -> startCommand(commandList = listOf("time"))
+                "date" -> startCommand(commandList = listOf("date"))
 
                 "hostname" -> startCommand(commandList = listOf("hostname"))
 
