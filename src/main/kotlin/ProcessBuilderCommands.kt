@@ -111,13 +111,13 @@ class ProcessBuilderCommands {
                         .append("tasklist (список активных процессов)\n")
                         .append("ipconfig (текущие значения конфигурации сети)\n")
                         .append("dir (список файлов и подкаталогов каталога)\n")
-                        .append("copy ()\n")
-                        .append("move ()\n")
-                        .append("\n")
-                        .append("\n")
-                        .append("\n")
-                        .append("\n")
-                        .append("\n")
+                        .append("copy [file] [path] (копирование файла)\n")
+                        .append("move [file] [path] (переместить файл)\n")
+                        .append("del [file] (удаление файла)\n")
+                        .append("makedir [path] (создание папки)\n")
+                        .append("ping [path] (проверка доступности целевого хоста)\n")
+                        .append("time (системное время)\n")
+                        .append("hostname (имя компьютера)\n")
                         .toString()
                 }
 
@@ -143,19 +143,36 @@ class ProcessBuilderCommands {
                     }
                 }
 
-                "" -> startCommand(commandList = listOf(""))
+                "del" -> {
+                    if (command.size == 2) {
+                        startCommand(commandList = listOf("rm", command[1]))
+                    } else {
+                        "Ошибка 0x00000057 произошла: Параметр задан неверно."
+                    }
+                }
 
-                "" -> startCommand(commandList = listOf(""))
+                "makedir" -> {
+                    if (command.size == 2) {
+                        startCommand(commandList = listOf("mkdir", command[1]))
+                    } else {
+                        "Ошибка 0x00000057 произошла: Параметр задан неверно."
+                    }
+                }
 
-                "" -> startCommand(commandList = listOf(""))
+                "ping" -> {
+                    if (command.size == 2) {
+                        startCommand(commandList = listOf("ping", command[1]))
+                    } else {
+                        "Ошибка 0x00000057 произошла: Параметр задан неверно."
+                    }
+                }
 
-                "" -> startCommand(commandList = listOf(""))
+                "time" -> startCommand(commandList = listOf("time"))
 
-                "" -> startCommand(commandList = listOf(""))
+                "hostname" -> startCommand(commandList = listOf("hostname"))
 
                 else -> "${command[0]} не является внутренней или внешней командой, исполняемой программой или пакетным файлом."
             }
-            //return "Ошибка 0x00000057 произошла: Параметр задан неверно."
         }
 
         private fun startCommand(commandList: List<String>): String {
