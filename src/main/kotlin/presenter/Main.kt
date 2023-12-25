@@ -143,9 +143,9 @@ fun main() = application {
 }
 
 private fun initMainViewModel() {
-    MainViewModel.getIconsOnToolsPanel()
+    /*MainViewModel.getIconsOnToolsPanel()
     MainViewModel.getIconsOnDesktop()
-    MainViewModel.getIconsOnStartMenu()
+    MainViewModel.getIconsOnStartMenu()*/
 }
 
 private fun initUserViewModel() {
@@ -154,5 +154,5 @@ private fun initUserViewModel() {
 }
 
 private fun initDevicesManagerViewModel() {
-    DeviceManagerViewModel.setDevices()
+    //DeviceManagerViewModel.setDevices()
 }

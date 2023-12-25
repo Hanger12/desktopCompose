@@ -105,21 +105,20 @@ class ProcessBuilderCommands {
 
         fun terminalCommand(value: String): String {
             val command = value.split(' ')
-            for (x in command) {
-                x.lowercase(Locale.ENGLISH)
-            }
-            return when (command[0]) {
+            return when (command[0].trim().lowercase(Locale.ENGLISH)) {
                 "help" -> {
-                    "perfmon" +
-                            "ipconfig" +
-                            "dir" +
-                            "" +
-                            "" +
-                            "" +
-                            "" +
-                            "" +
-                            "" +
-                            ""
+                    StringBuilder()
+                        .append("perfmon (запуск монитора производительности)\n")
+                        .append("ipconfig (текущие значения конфигурации сети)\n")
+                        .append("dir (список файлов и подкаталогов каталога)\n")
+                        .append("\n")
+                        .append("\n")
+                        .append("\n")
+                        .append("\n")
+                        .append("\n")
+                        .append("\n")
+                        .append("\n")
+                        .toString()
                 }
 
                 "perfmon" -> startCommand(commandList = listOf("top"))
@@ -130,20 +129,14 @@ class ProcessBuilderCommands {
 
                 // TODO
 
-                else -> "$command не является внутренней или внешней командой, исполняемой программой или пакетным файлом."
+                else -> "${command[0]} не является внутренней или внешней командой, исполняемой программой или пакетным файлом."
             }
             //return "Ошибка 0x00000057 произошла: Параметр задан неверно."
         }
 
         private fun startCommand(commandList: List<String>): String {
-            val builders = mutableListOf<ProcessBuilder>().apply {
-                commandList.forEach { command ->
-                    add(ProcessBuilder(command))
-                }
-            }
-            val process = ProcessBuilder.startPipeline(builders)
-            val last = process[1]
-            last.inputStream.reader(Charsets.UTF_8).use {
+            val process = ProcessBuilder(commandList).start()
+            process.inputStream.reader(Charsets.UTF_8).use {
                 val result = it.readText().split("\n")
                 val strBuilder = StringBuilder()
                 result.forEach { param ->
