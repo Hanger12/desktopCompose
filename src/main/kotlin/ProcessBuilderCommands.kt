@@ -137,14 +137,14 @@ class ProcessBuilderCommands {
         private fun startCommand(commandList: List<String>): String {
             val process = ProcessBuilder(commandList).start()
             process.inputStream.reader(Charsets.UTF_8).use {
-                val result = it.readText().split("\n")
-                val strBuilder = StringBuilder()
+                return it.readText()
+                /*val strBuilder = StringBuilder()
                 result.forEach { param ->
                     if (param.isNotEmpty()) {
                         strBuilder.append(param.trim())
                     }
                 }
-                return strBuilder.toString()
+                return strBuilder.toString()*/
             }
         }
     }

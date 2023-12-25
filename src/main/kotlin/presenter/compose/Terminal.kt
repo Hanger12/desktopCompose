@@ -3,6 +3,7 @@ package presenter.compose
 import ProcessBuilderCommands
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.onDrag
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
@@ -44,42 +45,48 @@ fun Terminal(
                 onClose = onClose,
                 onDrag = onDrag
             )
-            commandsList.forEach { command ->
-                Text(
-                    text = command,
-                    color = Color.White,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
             ) {
-                Text(
-                    text = "c:\\>",
-                    color = Color.White
-                )
-                BasicTextField(
-                    value = enterCommand,
-                    onValueChange = { newValue ->
-                        enterCommand = newValue
-                    },
-                    textStyle = TextStyle(
+                commandsList.forEach { command ->
+                    Text(
+                        text = command,
+                        color = Color.White,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "c:\\>",
                         color = Color.White
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onKeyEvent {
-                            if (it.key == Key.Enter) {
-                                val result = ProcessBuilderCommands.terminalCommand(enterCommand)
-                                commandsList.add("c:\\>$enterCommand")
-                                commandsList.add(result)
-                                enterCommand = ""
-                                true
-                            } else {
-                                false
+                    )
+                    BasicTextField(
+                        value = enterCommand,
+                        onValueChange = { newValue ->
+                            enterCommand = newValue
+                        },
+                        textStyle = TextStyle(
+                            color = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onKeyEvent {
+                                if (it.key == Key.Enter) {
+                                    val result = ProcessBuilderCommands.terminalCommand(enterCommand)
+                                    commandsList.add("c:\\>$enterCommand")
+                                    commandsList.add(result)
+                                    enterCommand = ""
+                                    true
+                                } else {
+                                    false
+                                }
                             }
-                        }
-                )
+                    )
+                }
             }
         }
     }
