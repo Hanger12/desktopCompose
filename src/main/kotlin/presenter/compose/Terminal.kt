@@ -28,7 +28,6 @@ fun Terminal(
     onClose: () -> Unit,
     onDrag: (Offset) -> Unit
 ) {
-    //val list = mutableListOf("1", "2", "3")
     val commandsList by remember { mutableStateOf(mutableListOf("")) }
     var enterCommand by remember { mutableStateOf("") }
     Box(modifier = modifier) {
@@ -109,7 +108,7 @@ fun TerminalSystemPanel(
         Row {
             Spacer(modifier = Modifier.width(5.dp))
             Image(
-                painter = painterResource("icon_device_manager.png"),
+                painter = painterResource("terminal.png"),
                 contentDescription = null,
                 modifier = Modifier.fillMaxHeight(0.8f)
             )

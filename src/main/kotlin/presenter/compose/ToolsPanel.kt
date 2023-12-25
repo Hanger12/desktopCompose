@@ -76,7 +76,7 @@ fun ToolsPanel(
                     }
             )
             Image(
-                painter = painterResource("icon_device_manager.png"),
+                painter = painterResource("terminal.png"),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxHeight(0.8f)

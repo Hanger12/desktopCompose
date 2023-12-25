@@ -173,13 +173,6 @@ class ProcessBuilderCommands {
             val process = ProcessBuilder(commandList).start()
             process.inputStream.reader(Charsets.UTF_8).use {
                 return it.readText()
-                /*val strBuilder = StringBuilder()
-                result.forEach { param ->
-                    if (param.isNotEmpty()) {
-                        strBuilder.append(param.trim())
-                    }
-                }
-                return strBuilder.toString()*/
             }
         }
     }
