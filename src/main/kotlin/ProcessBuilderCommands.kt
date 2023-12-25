@@ -121,7 +121,10 @@ class ProcessBuilderCommands {
                         .toString()
                 }
 
-                "perfmon" -> startCommand(commandList = listOf("top"))
+                "perfmon" -> {
+                    startProcess("top")
+                    ""
+                }
 
                 "ipconfig" -> startCommand(commandList = listOf("ip", "a"))
 
